@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Colorful Expense Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">💰</div>
+      <h1>Expense Tracker</h1>
+      <p>Track your daily, weekly &amp; monthly spending in style.</p>
+      <button id="google-signin-btn" class="btn-google">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+        Sign in with Google
+      </button>
+      <div id="login-error" class="login-error"></div>
+    </div>
+  </div>
+
+  <!-- APP SHELL -->
+  <div id="app-shell" class="app-shell hidden">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-emoji">💸</span>
+        <span class="brand-title">Expense Tracker</span>
+      </div>
+      <div class="user-box">
+        <img id="user-photo" class="user-photo" src="" alt="user" />
+        <span id="user-name" class="user-name"></span>
+        <button id="signout-btn" class="btn-signout">Sign out</button>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <!-- Add Expense Card -->
+      <section class="card add-expense-card">
+        <h2>➕ Add Expense</h2>
+        <form id="expense-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="amount">Amount (₹)</label>
+              <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required />
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select id="category" required>
+                <option value="Food">🍔 Food</option>
+                <option value="Transport">🚗 Transport</option>
+                <option value="Shopping">🛍️ Shopping</option>
+                <option value="Bills">💡 Bills</option>
+                <option value="Entertainment">🎬 Entertainment</option>
+                <option value="Health">💊 Health</option>
+                <option value="Education">📚 Education</option>
+                <option value="Other">🔖 Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" required />
+            </div>
+            <div class="form-group">
+              <label for="note">Note</label>
+              <input type="text" id="note" placeholder="Optional note" maxlength="80" />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">Add Expense</button>
+        </form>
+      </section>
+
+      <!-- Summary Cards -->
+      <section class="summary-row">
+        <div class="stat-card stat-today">
+          <div class="stat-label">Today</div>
+          <div class="stat-value" id="stat-today">₹0</div>
+        </div>
+        <div class="stat-card stat-week">
+          <div class="stat-label">This Week</div>
+          <div class="stat-value" id="stat-week">₹0</div>
+        </div>
+        <div class="stat-card stat-month">
+          <div class="stat-label">This Month</div>
+          <div class="stat-value" id="stat-month">₹0</div>
+        </div>
+        <div class="stat-card stat-total">
+          <div class="stat-label">All Time</div>
+          <div class="stat-value" id="stat-total">₹0</div>
+        </div>
+      </section>
+
+      <!-- Charts -->
+      <section class="card chart-card">
+        <div class="chart-tabs">
+          <button class="tab-btn active" data-range="day">Day-wise</button>
+          <button class="tab-btn" data-range="week">Week-wise</button>
+          <button class="tab-btn" data-range="month">Month-wise</button>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="mainChart"></canvas>
+        </div>
+      </section>
+
+      <section class="card chart-card">
+        <h2>📊 By Category</h2>
+        <div class="chart-wrap chart-wrap-small">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Expense List -->
+      <section class="card list-card">
+        <div class="list-header">
+          <h2>🧾 Recent Expenses</h2>
+          <input type="text" id="search-input" placeholder="Search notes/category..." />
+        </div>
+        <div id="expense-list" class="expense-list">
+          <p class="empty-state">No expenses yet. Add your first one!</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- Firebase compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
